@@ -19,6 +19,7 @@ jobs:
       PACK_NAME: rlcraft
       PACK_VERSION: ${{ github.event.inputs.version }}
       DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
+      IMAGE_TAG: curseforge/${{ env.PACK_NAME }}:${{ env.PACK_VERSION }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -29,16 +30,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v2
-        with:
-          push: true
-          tags: curseforge/${{ env.PACK_NAME }}:${{ env.PACK_VERSION }}
-          build-args: |
-            JAVA_VERSION
-            MINECRAFT_VERSION
-            FORGE_VERSION
-            PACK_NAME
-            PACK_VERSION
-            DOWNLOAD_URL
+      - name: Build image
+        run: |
+          docker build . \
+            -t ${IMAGE_TAG} \
+            --build-args JAVA_VERSION \
+            --build-args MINECRAFT_VERSION \
+            --build-args FORGE_VERSION \
+            --build-args PACK_NAME \
+            --build-args PACK_VERSION \
+            --build-args DOWNLOAD_URL
+
+      - name: Push to docker hub
+        run: docker push ${IMAGE_TAG}
