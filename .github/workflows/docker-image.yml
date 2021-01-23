@@ -12,6 +12,13 @@ on:
 
 jobs:
   build:
+    env:
+      JAVA_VERSION: 8
+      MINECRAFT_VERSION: 1.12.2
+      FORGE_VERSION: 14.23.5.2854
+      PACK_NAME: RLCraft
+      PACK_VERSION: ${{ github.event.inputs.version }}
+      DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -22,15 +29,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Source static build-args
-        run: source build-args.sh
-
       - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v2
-        env:
-          PACK_VERSION: ${{ github.event.inputs.version }}
-          DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
         with:
           push: true
           tags: curseforge/${{ env.PACK_NAME }}:${{ env.PACK_VERSION }}
