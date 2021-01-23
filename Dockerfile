@@ -1,6 +1,14 @@
 ARG JAVA_VERSION=11
 
-FROM curseforge/base:$JAVA_VERSION
+FROM amazoncorretto:$JAVA_VERSION
+
+ENV RAM_MAX=4G
+ENV RAM_MIN=1G
+
+RUN mkdir /minecraft \
+    && yum install -y unzip curl
+
+WORKDIR /minecraft
 
 ARG MINECRAFT_VERSION
 ARG FORGE_VERSION
