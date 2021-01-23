@@ -16,7 +16,7 @@ jobs:
       JAVA_VERSION: 8
       MINECRAFT_VERSION: 1.12.2
       FORGE_VERSION: 14.23.5.2854
-      PACK_NAME: RLCraft
+      PACK_NAME: rlcraft
       PACK_VERSION: ${{ github.event.inputs.version }}
       DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
     runs-on: ubuntu-latest
