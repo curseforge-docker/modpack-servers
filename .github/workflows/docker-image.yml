@@ -1,0 +1,43 @@
+name: Docker Image CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Modpack version'
+        required: true
+      downloadUrl:
+        description: 'Modpack server download url'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Source static build-args
+        run: source build-args.sh
+
+      - name: Build and push
+        id: docker_build
+        uses: docker/build-push-action@v2
+        env:
+          PACK_VERSION: ${{ github.event.inputs.version }}
+          DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
+        with:
+          push: true
+          tags: curseforge/${{ env.PACK_NAME }}:${{ env.PACK_VERSION }}
+          build-args: |
+            JAVA_VERSION
+            MINECRAFT_VERSION
+            FORGE_VERSION
+            PACK_NAME
+            PACK_VERSION
+            DOWNLOAD_URL
