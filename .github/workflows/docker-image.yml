@@ -33,12 +33,12 @@ jobs:
         run: |
           docker build . \
             -t curseforge/${PACK_NAME}:${PACK_VERSION} \
-            --build-args JAVA_VERSION \
-            --build-args MINECRAFT_VERSION \
-            --build-args FORGE_VERSION \
-            --build-args PACK_NAME \
-            --build-args PACK_VERSION \
-            --build-args DOWNLOAD_URL
+            --build-arg JAVA_VERSION \
+            --build-arg MINECRAFT_VERSION \
+            --build-arg FORGE_VERSION \
+            --build-arg PACK_NAME \
+            --build-arg PACK_VERSION \
+            --build-arg DOWNLOAD_URL
 
       - name: Push to docker hub
         run: docker push curseforge/${PACK_NAME}:${PACK_VERSION}
