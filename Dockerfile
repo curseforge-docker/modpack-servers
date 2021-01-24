@@ -5,8 +5,10 @@ FROM amazoncorretto:$JAVA_VERSION
 ENV RAM_MAX=4G
 ENV RAM_MIN=1G
 
-RUN mkdir /minecraft \
-    && yum install -y unzip curl
+RUN mkdir -p /minecraft/data \
+    && yum install -y unzip curl jq \
+    && yum clean all \
+    && rm -rf /var/cache/yum
 
 WORKDIR /minecraft
 
@@ -26,12 +28,13 @@ LABEL MINECRAFT_VERSION=$MINECRAFT_VERSION \
       PACK_NAME=$PACK_NAME \
       PACK_VERSION=$PACK_VERSION
 
-COPY entrypoint.sh /minecraft/
+COPY entrypoint.sh prepare.sh /minecraft/
 
 RUN echo "Downloading server files from ${DOWNLOAD_URL}" \
     && curl -sSL "${DOWNLOAD_URL}" -o serverfiles.zip \
     && unzip serverfiles.zip \
-    && rm serverfiles.zip
+    && rm serverfiles.zip \
+    && bash prepare.sh
 
 RUN echo "Download Forge version ${FORGE_VERSION}" \
     && curl -sSL "http://files.minecraftforge.net/maven/net/minecraftforge/forge/${FORGE_VERSION}/forge-${FORGE_VERSION}-installer.jar" -o forge-installer.jar \
