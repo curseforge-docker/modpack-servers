@@ -3,6 +3,20 @@ name: Docker Image CI
 on:
   workflow_dispatch:
     inputs:
+      javaVersion:
+        description: 'Java version'
+        required: true
+        default: 8
+      minecraftVersion:
+        description: 'Minecraft version'
+        required: true
+      forgeVersion:
+        description: 'Forge version'
+        required: true
+        default: '14.23.5.2854'
+      name:
+        description: 'Modpack name'
+        required: true
       version:
         description: 'Modpack version'
         required: true
@@ -13,10 +27,10 @@ on:
 jobs:
   build:
     env:
-      JAVA_VERSION: 8
-      MINECRAFT_VERSION: 1.12.2
-      FORGE_VERSION: 14.23.5.2854
-      PACK_NAME: rlcraft
+      JAVA_VERSION: ${{ github.event.inputs.javaVersion }}
+      MINECRAFT_VERSION: ${{ github.event.inputs.minecraftVersion }}
+      FORGE_VERSION: ${{ github.event.inputs.forgeVersion }}
+      PACK_NAME: ${{ github.event.inputs.name }}
       PACK_VERSION: ${{ github.event.inputs.version }}
       DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
     runs-on: ubuntu-latest
