@@ -61,3 +61,8 @@ jobs:
 
       - name: Push to docker hub
         run: docker push curseforge/${PACK_NAME}:${PACK_VERSION}
+
+      - name: Push to Github Container Registry
+        run: |
+          docker tag curseforge/${PACK_NAME}:${PACK_VERSION} ghcr.io/curseforge-docker/${PACK_NAME}:${PACK_VERSION}
+          docker push ghcr.io/curseforge-docker/${PACK_NAME}:${PACK_VERSION}
