@@ -50,6 +50,7 @@ jobs:
       - name: Login to Github Container Registry
         uses: docker/login-action@v1
         with:
+          registry: ghcr.io
           username: artheus
           password: ${{ secrets.GHCR_TOKEN }}
 
