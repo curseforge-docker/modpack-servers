@@ -23,6 +23,9 @@ on:
       downloadUrl:
         description: 'Modpack server download url'
         required: true
+      projectIdIgnore:
+        description: 'Comma-separated list of mod project ids to ignore'
+        required: true
 
 jobs:
   build:
@@ -33,6 +36,7 @@ jobs:
       PACK_NAME: ${{ github.event.inputs.name }}
       PACK_VERSION: ${{ github.event.inputs.version }}
       DOWNLOAD_URL: ${{ github.event.inputs.downloadUrl }}
+      PROJECTID_IGNORE: ${{ github.event.inputs.projectIdIgnore }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -52,7 +56,8 @@ jobs:
             --build-arg FORGE_VERSION \
             --build-arg PACK_NAME \
             --build-arg PACK_VERSION \
-            --build-arg DOWNLOAD_URL
+            --build-arg DOWNLOAD_URL \
+            --build-arg PROJECTID_IGNORE
 
       - name: Push to docker hub
         run: docker push curseforge/${PACK_NAME}:${PACK_VERSION}

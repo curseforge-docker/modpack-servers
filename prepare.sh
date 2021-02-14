@@ -13,6 +13,10 @@ if [ ! -z "${OVERRIDES_DIR}" ] && [ "${OVERRIDES_DIR}" != "null" ] && [ -d "./${
   rm -r "./${OVERRIDES_DIR}"
 fi
 
+if [ ! -z "${PROJECTID_IGNORE}" ]; then
+  echo "${PROJECTID_IGNORE}" > projectid.ignore
+fi
+
 ## Function to download mod files from manifest.json
 function downloadFile {
   if [[ $# != 2 ]]; then
@@ -20,11 +24,19 @@ function downloadFile {
     return
   fi
 
+  ADDONID=${1}
+  FILEID=${2}
+
+  if [ -f ./projectid.ignore ] && grep -q "${ADDONID}" ./projectid.ignore; then
+    echo "Ignoring addon with id ${ADDONID}"
+    return
+  fi
+
   ## Change to mods directory
   cd mods
 
   ## Get download url for mod file
-  MOD_FILE_URL=$(curl -sL "https://addons-ecs.forgesvc.net/api/v2/addon/${1}/file/${2}/download-url")
+  MOD_FILE_URL=$(curl -sL "https://addons-ecs.forgesvc.net/api/v2/addon/${ADDONID}/file/${FILEID}/download-url")
 
   echo "# Downloading mods/$(basename "$MOD_FILE_URL")"
   curl -sSLOJ "$MOD_FILE_URL"
