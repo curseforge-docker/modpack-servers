@@ -37,11 +37,11 @@ You can add other files like the `server.properties`, the `ops.json` and the `wh
 All container images are hosted on Docker Hub as well as in the Github Container Registry.  
 Docker Hub
 ```console
-docker pull curseforge/all-the-mods-6
+docker pull curseforge/all-the-mods-6:1.4.1
 ```
 Github Container Registry
 ```console
-docker pull ghcr.io/curseforge-docker/all-the-mods-6
+docker pull ghcr.io/curseforge-docker/all-the-mods-6:1.4.1
 ```
 ## List of available modpacks
 | Modpack                                                                             | GitHub                                                                                       | Docker Hub
@@ -50,11 +50,11 @@ docker pull ghcr.io/curseforge-docker/all-the-mods-6
 | [All the Mods 6](https://www.curseforge.com/minecraft/modpacks/all-the-mods-6)      | [1.4.1](https://github.com/orgs/curseforge-docker/packages/container/all-the-mods-6/1142098) | [1.5.0](https://hub.docker.com/layers/curseforge/all-the-mods-6/1.5.0/images/sha256-4f8cad9873af452757d6f07203b7af6e951ce60bd6a59e4c0f5572aba962d8e3?context=explore) [1.4.1](https://hub.docker.com/layers/curseforge/all-the-mods-6/1.4.1/images/sha256-cd5d74dfb422fadec278fc45074603634879c97b7a9ab8e3474cf3939a027b21?context=explore)
 | [SkyFactory 4](https://www.curseforge.com/minecraft/modpacks/skyfactory-4)          | -                                                                                            | [4.2.2](https://hub.docker.com/layers/curseforge/skyfactory-4/4.2.2/images/sha256-713c867f5b4b8ca50fe8a567f6dee85a943b7fcae32efe9d0bb3c1042e38c87f?context=explore)
 
-_The `latest` tag might not always be the latest version of the modpack, but the newest version we published._
+_Currently we do not have a `latest` tag for the docker containers, you will therefore always need to specify the server version you need._
 
 ## Contribution
 
-Please feel free to create pull requests and write about your issues here on GitHub. Constuctive Feedback is always a nice reward for our work. Though, if you are having trouble using docker or something is wrong with the modpack, please either read the docker documentation or refer to the mod pack author(s).
+Please feel free to create pull requests and write about your issues here on GitHub. Constuctive Feedback is always a nice reward for our work. Though, if you are having trouble using docker or something is wrong with the modpack, please either read the docker documentation or refer to the modpack author(s).
 
 ## The credit goes to ...
 
