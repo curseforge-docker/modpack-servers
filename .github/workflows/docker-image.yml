@@ -69,10 +69,13 @@ jobs:
             --build-arg PROJECTID_IGNORE
 
       - name: Push to Docker Hub
-        run: docker push curseforge/${PACK_NAME}:${PACK_VERSION}
+        run: |
+          docker push curseforge/${PACK_NAME}:${PACK_VERSION}
+          docker push curseforge/${PACK_NAME}:latest
 
       - name: Push to Github Container Registry
         run: |
           docker tag curseforge/${PACK_NAME}:${PACK_VERSION} ghcr.io/curseforge-docker/${PACK_NAME}:${PACK_VERSION}
           docker tag curseforge/${PACK_NAME}:${PACK_VERSION} ghcr.io/curseforge-docker/${PACK_NAME}:latest
           docker push ghcr.io/curseforge-docker/${PACK_NAME}:${PACK_VERSION}
+          docker push ghcr.io/curseforge-docker/${PACK_NAME}:latest
