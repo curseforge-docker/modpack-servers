@@ -18,6 +18,25 @@ If you want others to join you or this image runs on a server, you need to open 
 
 To know more regarding the usage of docker, head over to the [Docker CLI reference](https://docs.docker.com/engine/reference/commandline/docker/)
 
+
+### Docker Compose
+
+```
+# docker-compose.yml
+version: "3.7"
+services:
+  atm6:
+    image: curseforge/all-the-mods-6
+    environment:
+      - EULA=true
+    volumes:
+      - /var/lib/minecraft-atm6/world:/minecraft/world
+      - /var/lib/minecraft-atm6/backups:/minecraft/backups
+    ports:
+      - 25565:25565
+    restart: unless-stopped
+```
+
 ### Volumes
 
 In order to persist your data (e.g. in case of a modpack update), you need to mount docker volumes.  
@@ -25,8 +44,8 @@ __It is strongly recommended to do so, otherwise you wight loose your data, like
 
 ```console
 docker run \
-  -v /var/lib/minecraft-atm6/world:world \
-  -v /var/lib/minecraft-atm6/backups:backups \
+  -v /var/lib/minecraft-atm6/world:/minecraft/world \
+  -v /var/lib/minecraft-atm6/backups:/minecraft/backups \
   ...
 ```
 
