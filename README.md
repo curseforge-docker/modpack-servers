@@ -18,6 +18,27 @@ If you want others to join you or this image runs on a server, you need to open 
 
 To know more regarding the usage of docker, head over to the [Docker CLI reference](https://docs.docker.com/engine/reference/commandline/docker/)
 
+### Resource allocation and limiting
+
+Running Forge modpack servers requires way too much resources (RAM, CPU etc).
+**This will be a problem** if your host machine has limited (or outdated) CPU or RAM.
+
+Please read the information below before changing any of the resource limits or allocation configurations.
+
+#### Java Heap space allocation
+
+Running the Minecraft Java Edition server, requires the server to be run through a JAVA VM on the hosting machine.
+Currently we default to using a minimum allocation of `1G` and a maximum of `4G` RAM.
+
+The default values can be overridden by using the `-e` (aka. `--env`) flag to set the environment
+variables `RAM_MIN` and `RAM_MAX` to the appropriate limits for your server.
+
+**Please note!** We do not recommend going any lower than the default values for any modpack!
+
+#### Docker resource limits
+
+As a part of docker, you can configure the "Runtime constraints on resources", this is well documented in the Docker documentation here:
+https://docs.docker.com/engine/reference/run/#runtime-constraints-on-resources
 
 ### Docker Compose
 
